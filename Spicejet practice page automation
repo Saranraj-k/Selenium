@@ -1,0 +1,73 @@
+import java.util.List;
+
+import org.openqa.selenium.By;
+//import org.openqa.selenium.By.ById;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+public class Endtoendtest {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\hp\\Downloads\\chromedriver.exe");	
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		
+		driver.findElement(By.id("autosuggest")).sendKeys("ind");
+		Thread.sleep(3000);
+		List<WebElement> options=driver.findElements(By.xpath("//li[@class='ui-menu-item'] //a")); // this will fetch the list of data from the drop down
+		for(WebElement option : options)
+		{
+			if(option.getText().equalsIgnoreCase("India"))
+			{
+				option.click();
+				break;
+			}
+		
+		}
+		
+		Thread.sleep(2000);
+
+		driver.findElement(By.id("ctl00_mainContent_rbtnl_Trip_0")).click();
+		driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXTaction")).click();
+		driver.findElement(By.xpath("//a[@value='BLR']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']")).click();
+		driver.findElement(By.cssSelector("a.ui-state-default.ui-state-highlight.ui-state-hover")).click();
+		if(driver.findElement(By.cssSelector("div#Div1")).getAttribute("style").contains("0.5"))
+		{
+			System.out.println("is disabled");
+			Assert.assertTrue(true);
+		}
+		else
+		{
+			System.out.println("is enabled");
+			Assert.assertTrue(false);
+		}
+		
+		//Thread.sleep(3000);
+		
+		driver.findElement(By.cssSelector("div[id*='divpaxinfo']")).click();
+		Thread.sleep(3000);
+		for(int i=1;i<4;i++)
+		{
+		driver.findElement(By.id("hrefIncAdt")).click();//to choose the no of adults
+		}
+		driver.findElement(By.id("btnclosepaxoption")).click();
+		Thread.sleep(3000);
+		
+		WebElement staticdropdown= driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency"));//to get exactly which select tag we want
+		Select dropdown=new Select(staticdropdown);
+		dropdown.selectByValue("USD");
+		
+		driver.findElement(By.cssSelector("input[id*=SeniorCitizenDiscount]")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("//div/span/input[@id='ctl00_mainContent_btn_FindFlights']")).click();
+
+
+	}
+
+}
