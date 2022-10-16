@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class practicephptravles {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		Scanner scan=new Scanner(System.in);
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\hp\\Downloads\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		driver.get("https://phptravels.com/demo/");
+		System.out.println("Enter first name");
+		String firstName=scan.next();
+		System.out.println("Enter last name");
+		String lastName=scan.next();
+		String businessName=firstName+" "+lastName;
+		System.out.println("Enter email");
+		String email=scan.next();
+		driver.findElement(By.cssSelector("input[class*='first_name']")).sendKeys(firstName);
+		driver.findElement(By.xpath("//input[contains(@class,'last_name')]")).sendKeys(lastName);
+		driver.findElement(By.xpath("//input[contains(@class,'business_name')]")).sendKeys(businessName);
+		driver.findElement(By.xpath("//input[contains(@class,'email')]")).sendKeys(email);
+		String num1=driver.findElement(By.xpath("//div/h2/span[1]")).getText();
+		String num2=driver.findElement(By.xpath("//div/h2/span[2]")).getText();
+		int a=Integer.parseInt(num1);
+		int b=Integer.parseInt(num2);
+		int c= a+b;
+		String sum=String.valueOf(c);
+		System.out.println(c);
+		driver.findElement(By.cssSelector("input#number")).sendKeys(sum);
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("//button[contains(.,'Submit')]")).click();
+		Thread.sleep(5000);
+		String output1=driver.findElement(By.xpath("//h2/strong[.=' Thank you!']")).getText();
+		String output2=driver.findElement(By.xpath("//p[@class='text-center cw']")).getText();
+		System.out.println(output1+"\n"+output2);
+
+	}
+
+}
